@@ -9,7 +9,7 @@ class UserAvatarontroller {
 
     const diskStorage = new DiskStorage();
 
-    const user = await knex("users").where({ id: user_id });
+    const user = await knex("users").where({ id: user_id }).first();
 
     if (!user) {
       throw new AppError("Only authenticated users can change avatar", 401);
@@ -21,10 +21,10 @@ class UserAvatarontroller {
 
     const filename = await diskStorage.saveFile(avatarFilename);
 
-    user.avatar = filename;
-    console.log(user)
+    user.avatar = await filename;
+    console.log(user);
 
-    await knex("users").where({ id: user_id }).update(user);
+    await knex("users").where({ id: user_id }).update({avatar:filename});
 
     return response.json(user);
   }
