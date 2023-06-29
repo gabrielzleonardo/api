@@ -22,9 +22,8 @@ class UserAvatarontroller {
     const filename = await diskStorage.saveFile(avatarFilename);
 
     user.avatar = await filename;
-    console.log(user);
 
-    await knex("users").where({ id: user_id }).update({avatar:filename});
+    await knex("users").where({ id: user_id }).update({ avatar: filename });
 
     return response.json(user);
   }
